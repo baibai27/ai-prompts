@@ -20,14 +20,20 @@ const handler = NextAuth({
     async signIn({ profile }) {
       try {
         await connectToDB();
-        // check is a user exists in the database
+        // check is a user exists in the database, update the profile pricture
         const userExists = await User.findOne({ email: profile.email });
+        if (userExists) {
+          await User.updateOne(
+            { email: profile.email },
+            { $set: { image: profile.picture } }
+          );
+        }
         // if not, create a new user
         if (!userExists) {
           await User.create({
             email: profile.email,
             username: profile.name.replace(" ", "").toLowerCase(),
-            image: profile.image,
+            image: profile.picture,
           });
         }
         return true;

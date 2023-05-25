@@ -19,6 +19,8 @@ const Nav = () => {
     setUpProviders();
   }, []);
 
+  // console.log(session); it has the user.image property
+
   return (
     <nav className="flex-between w-full mb-16 pt-3">
       <Link href="/" className="flex gap-2 glex-center">
@@ -60,7 +62,7 @@ const Nav = () => {
                   type="button"
                   key={provider.name}
                   onClick={() => signIn(provider.id)}
-                  className="black_btn"
+                  className="black_btn pt-10"
                 >
                   Sign In with {provider.name}
                 </button>
