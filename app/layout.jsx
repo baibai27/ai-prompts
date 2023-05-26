@@ -5,6 +5,9 @@ import "@/styles/globals.css";
 export const metadata = {
   title: "Promptopia",
   description: "Discover and Share AI-prompts",
+  // icons: {
+  //   icon: "/favicon.ico",
+  // },
 };
 
 const RootLayout = ({ children }) => {

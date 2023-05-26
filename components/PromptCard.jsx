@@ -11,15 +11,9 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const [copied, setCopied] = useState("");
 
   const handleProfileClick = () => {
-    // only allow the logged in user to see their own profile
-    // if (post.creator._id === session?.user.id) {
-    //   router.push("/profile");
-    //   router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
-    // }
-
-    // allow logged in user to see the profile of other the creator
-    if (session?.user.id) {
+    if (post.creator._id === session?.user.id) {
       router.push("/profile");
+    } else {
       router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
     }
   };
