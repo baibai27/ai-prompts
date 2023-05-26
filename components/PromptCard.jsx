@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
@@ -9,6 +9,21 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const pathName = usePathname();
   const router = useRouter();
   const [copied, setCopied] = useState("");
+
+  const handleProfileClick = () => {
+    // only allow the logged in user to see their own profile
+    // if (post.creator._id === session?.user.id) {
+    //   router.push("/profile");
+    //   router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
+    // }
+
+    // allow logged in user to see the profile of other the creator
+    if (session?.user.id) {
+      router.push("/profile");
+      router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
+    }
+  };
+
   const handleCopy = () => {
     setCopied(post.prompt);
     navigator.clipboard.writeText(post.prompt);
@@ -17,7 +32,10 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
-        <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
+        <div
+          className="flex-1 flex justify-start items-center gap-3 cursor-pointer"
+          onClick={handleProfileClick}
+        >
           <Image
             src={post.creator?.image}
             alt="user_image"
@@ -41,6 +59,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
                 ? "/assets/icons/tick.svg"
                 : "/assets/icons/copy.svg"
             }
+            alt={copied === post.prompt ? "copied" : "copy"}
             width={12}
             height={12}
           />

@@ -18,7 +18,8 @@ const MyProfile = () => {
     if (session?.user.id) {
       fetchPosts();
     }
-  }, []);
+  }, [session?.user.id]);
+
   const handleEdit = (post) => {
     router.push(`/update-prompt?id=${post._id}`);
   };
@@ -32,7 +33,7 @@ const MyProfile = () => {
           method: "DELETE",
         });
 
-        const filteredPosts = myPosts.filter((p) => p._id !== post._id);
+        const filteredPosts = myPosts.filter((item) => item._id !== post._id);
         setMyPosts(filteredPosts);
       } catch (error) {
         console.log(error);
@@ -43,7 +44,7 @@ const MyProfile = () => {
   return (
     <Profile
       name="My"
-      desc="This is your profile page"
+      desc="Welcome to your profile page! Manage your prompts here and share your excpetional prompts and inspire others with your creativity!"
       data={myPosts}
       handleEdit={handleEdit}
       handleDelete={handleDelete}
